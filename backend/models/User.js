@@ -7,11 +7,6 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    mobile_no:{
-        type: String,
-        required: true,
-        unique:true
-    },
     email:{
         type: String,
         required: true,
@@ -28,4 +23,6 @@ const UserSchema = new Schema({
     },
 });
 
-module.exports=mongoose.model('user',UserSchema);
+const User=mongoose.model('user',UserSchema);
+User.createIndexes();
+module.exports=User;
