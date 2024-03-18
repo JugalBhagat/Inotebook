@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const { body, validationResult } = require('express-validator');
+const jwt = require('jsonwebtoken');
 
 //create user using POST "/api/auth/"
 router.post('/createuser', [
@@ -22,7 +23,7 @@ router.post('/createuser', [
     try {
         //check email already exits
         let user = await User.findOne({ email: req.body.email });   // await becuase its a promise
-        console.log(user);
+        // console.log(user);
         if (user != null) {
             return res.status(400).json({ error: "User Already Exits" });
         }
@@ -35,9 +36,20 @@ router.post('/createuser', [
             name: req.body.name,
             email: req.body.email,
             password: secPass,
-        })
+        });
 
-        res.json(user)
+        const data={
+            user:{
+                id:user.id
+            }
+        }
+        const JWT_SECRET="jUgALBhaGAt"
+        const authToken=jwt.sign(data,JWT_SECRET);
+        console.log(authToken)
+
+        // res.json(user)
+        res.json({"authToken":authToken})
+
     }catch(error){
         console.error(error.message);
         res.status(500).send("Something went wrong");   
