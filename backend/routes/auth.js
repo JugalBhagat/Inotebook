@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const bcrypt = require('bcryptjs');
 const { body, validationResult } = require('express-validator');
 
 //create user using POST "/api/auth/"
@@ -26,11 +27,14 @@ router.post('/createuser', [
             return res.status(400).json({ error: "User Already Exits" });
         }
 
+        const salt=await bcrypt.genSalt(10);
+        const secPass=await bcrypt.hash(req.body.password,salt)
+
         // save data to databse
         user = await User.create({
             name: req.body.name,
             email: req.body.email,
-            password: req.body.password,
+            password: secPass,
         })
 
         res.json(user)
