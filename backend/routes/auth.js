@@ -4,6 +4,7 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const { body, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
+const fetchUser = require('../middleware/fetchUser');
 const JWT_SECRET = "jUgALBhaGAt";
 
 //create user using POST "/api/auth/createuser"
@@ -93,11 +94,12 @@ router.post('/login', [
     }
 });
 
-//Get User Details "/api/auth/login"
-router.post('/getDetails', async (req, res) => {
+//Get User Details "/api/auth/getUserDetails"
+router.post('/getUserDetails',fetchUser, async (req, res) => {
     try {
-        userId="";
-        const user=await User.findById(userId).select("-password")
+        userId=req.user.id;
+        const user=await User.findById(userId).select("-password");
+        res.send(user);
     } catch (error) {
         // console.error(error.message);
         res.status(500).send("Something went Wrong");
