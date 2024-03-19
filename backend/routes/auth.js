@@ -4,7 +4,7 @@ const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const { body, validationResult } = require('express-validator');
 const jwt = require('jsonwebtoken');
-const JWT_SECRET="jUgALBhaGAt";
+const JWT_SECRET = "jUgALBhaGAt";
 
 //create user using POST "/api/auth/createuser"
 router.post('/createuser', [
@@ -29,8 +29,8 @@ router.post('/createuser', [
             return res.status(400).json({ error: "User Already Exits" });
         }
 
-        const salt=await bcrypt.genSalt(10);
-        const secPass=await bcrypt.hash(req.body.password,salt)
+        const salt = await bcrypt.genSalt(10);
+        const secPass = await bcrypt.hash(req.body.password, salt)
 
         // save data to databse
         user = await User.create({
@@ -39,20 +39,20 @@ router.post('/createuser', [
             password: secPass,
         });
 
-        const data={
-            user:{
-                id:user.id
+        const data = {
+            user: {
+                id: user.id
             }
         }
-        const authToken=jwt.sign(data,JWT_SECRET);
+        const authToken = jwt.sign(data, JWT_SECRET);
         console.log(authToken)
 
         // res.json(user)
-        res.json({"authToken":authToken})
+        res.json({ "authToken": authToken })
 
-    }catch(error){
+    } catch (error) {
         console.error(error.message);
-        res.status(500).send("Something went wrong");   
+        res.status(500).send("Something went wrong");
     }
 });
 
@@ -68,30 +68,39 @@ router.post('/login', [
         return res.status(400).json({ error: errors.array() });
     }
 
-    const {email,password}=req.body;
-    try{
-        let user=await User.findOne({email});
-        if(!user){
-            return res.status(400).json({error:"Incorrect Password"});
+    const { email, password } = req.body;
+    try {
+        let user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ error: "Incorrect Password" });
         }
-        const passCompare=await bcrypt.compare(password,user.password);
-        if(!passCompare){
-            return res.status(400).json({error:"Incorrect Password"});
+        const passCompare = await bcrypt.compare(password, user.password);
+        if (!passCompare) {
+            return res.status(400).json({ error: "Incorrect Password" });
         }
-        const payload={
-            user:{
-                id:user.id
+        const payload = {
+            user: {
+                id: user.id
             }
         }
-        const authToken=jwt.sign(payload,JWT_SECRET);
+        const authToken = jwt.sign(payload, JWT_SECRET);
         // console.log("AuthToken = ",authToken)
-        res.json({"authToken":authToken})
+        res.json({ "authToken": authToken })
 
-    }catch(error)
-    {
+    } catch (error) {
         // console.error(error.message);
-        res.status(500).send("Something went Wrong");   
+        res.status(500).send("Something went Wrong");
     }
 });
 
+//Get User Details "/api/auth/login"
+router.post('/getDetails', async (req, res) => {
+    try {
+        userId="";
+        const user=await User.findById(userId).select("-password")
+    } catch (error) {
+        // console.error(error.message);
+        res.status(500).send("Something went Wrong");
+    }
+});
 module.exports = router
