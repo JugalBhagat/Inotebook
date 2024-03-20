@@ -38,7 +38,7 @@ router.post('/newnote', fetchUser, [
     }
 })
 
-// Update exisiting note using POST "/api/note/updatenote"
+// Update exisiting note using PUT "/api/note/updatenote"
 router.put('/updatenote/:id', fetchUser, [
     body('title', "Enter a valid title").isLength({ min: 3 }),
     body('description', "Enter Description").notEmpty(),],
@@ -67,6 +67,27 @@ router.put('/updatenote/:id', fetchUser, [
 
         note = await Note.findByIdAndUpdate(req.params.id,{$set:NewNote},{new:true})
         res.send(note);
+
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send("Something went wrong");
+    }
+})
+
+// Delete exisiting note using DELETE "/api/note/deletenote"
+router.delete('/deletenote/:id', fetchUser,async (req, res) => {
+    try {//find note to be Deleted
+        let note= await Note.findById(req.params.id);
+        if(!note){
+            return res.status(404).send("Not Found");
+        }
+        if(note.user.toString() != req.user.id)
+        {
+            return res.status(401).send("Not Allowed");
+        }
+
+        note = await Note.findByIdAndDelete(req.params.id,note)
+        res.json({"Success":"A Note Has Been DELETED Successfully"});
 
     } catch (error) {
         console.error(error.message);
