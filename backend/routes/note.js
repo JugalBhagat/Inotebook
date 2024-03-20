@@ -9,10 +9,8 @@ const router = express.Router();
 router.get('/fetchallnotes', fetchUser , async (req, res) => {
     try {
         const notes = await Note.find({ user : req.user.id });
-        // console.log(req.user.id);
         res.json(notes);
     } catch (error) {
-        console.error(error.message);
         res.status(500).json({error:"Something went wrong"})
     }   
 })
