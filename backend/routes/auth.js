@@ -105,4 +105,5 @@ router.post('/getUserDetails',fetchUser, async (req, res) => {
         res.status(500).send("Something went Wrong");
     }
 });
+
 module.exports = router
