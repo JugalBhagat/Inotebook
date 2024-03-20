@@ -38,4 +38,40 @@ router.post('/newnote', fetchUser, [
     }
 })
 
+// Update exisiting note using POST "/api/note/updatenote"
+router.put('/updatenote/:id', fetchUser, [
+    body('title', "Enter a valid title").isLength({ min: 3 }),
+    body('description', "Enter Description").notEmpty(),],
+    async (req, res) => {
+
+    const {title,description,tag}=req.body;
+    const error = validationResult(req);
+    if (!error.isEmpty()) {
+        res.status(400).json({ errors: error.array() });
+    }
+    try {
+        const NewNote={};
+        if(title){NewNote.title=title;}
+        if(description){NewNote.description=description;}
+        if(tag){NewNote.tag=tag;}
+        
+        //find note to be updated
+        let note= await Note.findById(req.params.id);
+        if(!note){
+            return res.status(404).send("Not Found");
+        }
+        if(note.user.toString() != req.user.id)
+        {
+            return res.status(401).send("Not Allowed");
+        }
+
+        note = await Note.findByIdAndUpdate(req.params.id,{$set:NewNote},{new:true})
+        res.send(note);
+
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send("Something went wrong");
+    }
+})
+
 module.exports = router;
