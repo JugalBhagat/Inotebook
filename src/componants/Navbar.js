@@ -8,6 +8,7 @@ function Navbar() {
         <div>
             <nav className="navbar navbar-expand-lg navbar-dark p-3 bg-dark">
                 <div className="container-fluid">
+                    <img className="m-2" src="https://cdn4.iconfinder.com/data/icons/small-n-flat/24/notepad-512.png" width={40} alt="Logo" />
                     <Link className="navbar-brand" to="/">Inotebook</Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
