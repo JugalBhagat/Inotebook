@@ -1,11 +1,19 @@
-import React from 'react'
+import React,{useContext, useEffect} from 'react'
+import NotesContext from '../context/notes/notesContext'
 
-function about() {
+function About() {
+  const a= useContext(NotesContext);
+  a.update();
+  useEffect(() => {
+    a.update();
+    // eslint-disable-next-line
+  },[])
+  
   return (
     <div>
-      <h3>This is About page</h3>
+      <p>This is About page {a.state.name} and his email is {a.state.email}</p>
     </div>
   )
 }
 
-export default about
+export default About
