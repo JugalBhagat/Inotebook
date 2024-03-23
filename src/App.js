@@ -1,13 +1,26 @@
 
 import './App.css';
+import Navbar from './componants/Navbar';
+import Home from './componants/home';
+import About from './componants/about';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+} from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <h1>I am Vengence</h1>
-      <h1>I am The Knight</h1>
-      <h1>I AM BATMAN</h1>
-    </div>
+    <>
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route exact path="/" element={<Home/>}></Route>
+        <Route exact path="/index" element={<Home/>}></Route>
+        <Route exact path="/about" element={<About/>}></Route>
+      </Routes>
+      </Router>
+    </>
   );
 }
 
