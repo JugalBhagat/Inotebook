@@ -1,23 +1,39 @@
 import React, { useState } from "react";
 import notesContext from "./notesContext";
 
-const NotesState=(props)=>{
-    const data1={
-        "name":"Jugal Bhagat",
-        "email":"jugalbhahat017@gmail.com"
-    }
-    const data2={
-        "name":"Keval Parmar",
-        "email":"kevalparmar@gmail.com"
-    }
-    const [state,setState]=useState(data1);
-    const update=()=>{
-        setTimeout(() => {
-            setState(data2);
-        }, 2000);
-    }
+const NotesState = (props) => {
+    const notesInit = [
+        {
+            "_id": "65fa7bbbc28566092941dcc8",
+            "user": "65f92aa2dd8ef4d1b9fa0d3f",
+            "title": "day:2",
+            "description": "Hello this my 2nd day at Pune, Today I watched a movie Black Pather 2, Clg is starting from tomorow",
+            "tag": "movie",
+            "date": "2024-03-20T06:01:31.643Z",
+            "__v": 0
+        },
+        {
+            "_id": "65fa7bfcc28566092941dcca",
+            "user": "65f92aa2dd8ef4d1b9fa0d3f",
+            "title": "day:1",
+            "description": "Hello this my 1st day at Pune, Today i went to meet with HOD",
+            "tag": "Clg",
+            "date": "2024-03-20T06:02:36.364Z",
+            "__v": 0
+        },
+        {
+            "_id": "65fad7d98897cd05c7b7ec7d",
+            "user": "65f92aa2dd8ef4d1b9fa0d3f",
+            "title": "day-4 Updated",
+            "description": "Second day of collage, This is the day I started thinking, I have made terrible Mistake",
+            "tag": "what a Shitty collage !",
+            "date": "2024-03-20T12:34:33.748Z",
+            "__v": 0
+        }
+    ]
+    const [notes,setNotes]=useState(notesInit);
     return (
-        <notesContext.Provider value={{state,update}}>
+        <notesContext.Provider value={{ notes,setNotes }}>
             {props.children}
         </notesContext.Provider>
     )
