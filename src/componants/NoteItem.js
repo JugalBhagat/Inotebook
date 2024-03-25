@@ -1,22 +1,24 @@
 import React from 'react'
 
 function NoteItem(props) {
-    const {notes}=props;
+  const { notes } = props;
   return (
-    // <div class="row">
-    <div class="col-sm-4 mt-3">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">{notes.title}</h5>
+    // <div className="row">
+    <div className="col-sm-4 mt-3">
+      <div className="card">
+        <div className="card-body">
+          <h5 className="card-title">{notes.title}</h5>
           <p className=''>{(notes.date)}</p>
-          <p class="card-text">{notes.description}</p>
-          <b>Tags :</b> {notes.tag}<br/>
-          <button type="button" class="btn btn-primary">Edit</button>
-          <button type="button" class="btn btn-danger m-3">Delete</button>
+          <p className="card-text">{notes.description}</p>
+          <b>Tags :</b> {notes.tag}<br />
+          <div className="d-flex flex-row-reverse">
+            <i className="fa-solid fa-trash-can m-2"></i>
+            <i className="fa-regular fa-pen-to-square m-2"></i>
+          </div>
         </div>
       </div>
     </div>
-//   </div>
+    //   </div>
   )
 }
 

@@ -9,6 +9,7 @@ import {
   Routes,
 } from "react-router-dom";
 import NoteState from './context/notes/notesState';
+import Alert from './componants/Alert';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <NoteState>
         <Router>
           <Navbar />
+          <Alert msg="I AM BATMAN"/>
           <div className="container">
             <Routes>
               <Route exact path="/" element={<Home />}></Route>

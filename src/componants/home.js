@@ -18,7 +18,7 @@ function Home() {
             <input type="text" className="form-control" id="tags" placeholder="tags" />
           </div>
           <div className="mb-3 tex">
-            <button type="submit" onClick="" className="btn btn-primary w-25">Save</button>
+            <button type="submit" className="btn btn-primary w-25">Save</button>
           </div>
         </form>
       </div>
