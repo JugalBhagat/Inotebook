@@ -4,7 +4,7 @@ import Notes from './notes.js';
 function Home() {
   return (
     <div className="container mb-5">
-        <Notes />
+        <Notes key={Notes._id} />
     </div>
 
   )

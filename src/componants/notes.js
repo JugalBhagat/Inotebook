@@ -14,8 +14,8 @@ function Notes() {
       <AddNote />
       <div className='row'>
         <h2>Your Notes</h2>
-        {notes.map((notes) => {
-          return <NoteItem notes={notes} />;
+        {notes.map((note) => {
+          return <NoteItem key={note._id} notes={note} />;
         })}
       </div>
     </>
