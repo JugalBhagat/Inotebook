@@ -9,8 +9,8 @@ import { useLocation } from 'react-router-dom';
 function Navbar() {
     let location = useLocation();
     useEffect(() => {
-        console.log(location.pathname);
-    }, [location]);
+        // console.log(location.pathname);
+    }, []);
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-dark p-3 bg-dark">
