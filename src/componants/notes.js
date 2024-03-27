@@ -8,9 +8,10 @@ import { useRef } from "react";
 function Notes() {
   const context = useContext(notesContext);
   // eslint-disable-next-line
-  const { notes, getallNotes } = context;
+  const { notes, getallNotes ,editNote } = context;
   const ref = useRef(null);
-  const [note,setNote]=useState({title:"",description:"",tag:""});
+  const ref_close = useRef(null);
+  const [note,setNote]=useState({id:"",title:"",description:"",tag:""});
 
   useEffect(() => {
     getallNotes();
@@ -22,9 +23,9 @@ function Notes() {
     setNote(current_note);
   }
 
-  const handleOnClick = (e) => {
-    e.preventDefault();               //to NOT submit form
-    console.log("Updateing Note:",note);
+  const handleOnClick = () => { 
+    editNote(note._id,note.title,note.description,note.tag); 
+    ref_close.current.click();        
   }
   const handleOnChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value })          //to keep default value
@@ -56,7 +57,7 @@ function Notes() {
               </form>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" ref={ref_close} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               <button type="submit" className="btn btn-primary" onClick={handleOnClick}>Apply Changes</button>
             </div>
           </div>

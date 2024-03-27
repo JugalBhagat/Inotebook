@@ -20,8 +20,8 @@ function NoteItem(props) {
           <p className="card-text">{notes.description}</p>
           <b>Tags :</b> {notes.tag}<br />
           <div className="d-flex flex-row-reverse">
-            <i className="fa-solid fa-trash-can m-2" onClick={()=>{handle_delNote(notes._id)}}>delete</i>
-            <i className="fa-regular fa-pen-to-square m-2" onClick={()=>{updateNote(notes)}}>update</i>
+            <i className="fa-solid fa-trash-can m-2" onClick={()=>{handle_delNote(notes._id)}}></i>
+            <i className="fa-regular fa-pen-to-square m-2" onClick={()=>{updateNote(notes)}}></i>
           </div>
         </div>
       </div>
