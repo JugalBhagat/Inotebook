@@ -1,9 +1,31 @@
-import React from 'react'
+import React,{useState} from 'react';
 import {
-    Link,
+    Link
 } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
+    const [creds,setCreds]=useState({name:"",email:"",password:""});
+    let navigate = useNavigate();
+
+    const handleSignup=async(e)=>{
+        e.preventDefault();
+        const response=await fetch('http://localhost:4000/api/auth/createuser',{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify({name:creds.name,email:creds.email,password:creds.password})
+        });
+        const json=await response.json();
+        console.log(json);
+        navigate("/login");
+    }
+
+    const handleOnChange = (e) => {
+        setCreds({ ...creds, [e.target.name]: e.target.value })          //to keep default value
+    }
+
     return (
         <div className="container mt-5">
             <div className="row justify-content-center">
@@ -11,15 +33,15 @@ function Signup() {
                     <div className="card ">
                         <div className="card-body">
                             <h1 className="text-center mb-4">Signup here</h1>
-                            <form>
+                            <form onSubmit={handleSignup}>
                                 <div className="mb-3">
-                                    <input type="text" className="form-control" id="name" name="name" placeholder="Name" />
+                                    <input type="text" className="form-control" id="name" value={creds.name} onChange={handleOnChange} name="name" placeholder="Name" />
                                 </div>
                                 <div className="mb-3">
-                                    <input type="text" className="form-control" id="email" name="email" placeholder="Email Id" />
+                                    <input type="text" className="form-control" id="email" value={creds.email} onChange={handleOnChange} name="email" placeholder="Email Id" />
                                 </div>
                                 <div className="mb-3">
-                                    <input type="password" className="form-control" id="password" name="password" placeholder="Password" />
+                                    <input type="password" className="form-control" id="password" value={creds.password} onChange={handleOnChange} name="password" placeholder="Password" />
                                 </div>
                                 <button type="submit" className="btn btn-primary w-100">Sign Up</button>
                             </form>
