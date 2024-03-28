@@ -63,6 +63,7 @@ router.post('/login', [
     body('email', "Enter Valid Email").isEmail(),
     body('password', "Password must be 6 digit long").isLength({ min: 6 }),
 ], async (req, res) => {
+    let success=false;
     const errors = validationResult(req);
     // check if any errors
     if (!errors.isEmpty()) {
@@ -73,11 +74,13 @@ router.post('/login', [
     try {
         let user = await User.findOne({ email });
         if (!user) {
-            return res.status(400).json({ error: "Incorrect Password" });
+            success=false;
+            return res.status(400).json({ success ,error: "Incorrect credential (not exists) " });
         }
         const passCompare = await bcrypt.compare(password, user.password);
         if (!passCompare) {
-            return res.status(400).json({ error: "Incorrect Password" });
+            success=false;
+            return res.status(400).json({ success ,error: "Incorrect credential (incorrent password) " });
         }
         const payload = {
             user: {
@@ -86,7 +89,8 @@ router.post('/login', [
         }
         const authToken = jwt.sign(payload, JWT_SECRET);
         // console.log("AuthToken = ",authToken)
-        res.json({ "authToken": authToken })
+        success=true;
+        res.json({"success":success,"authToken": authToken })
 
     } catch (error) {
         // console.error(error.message);
