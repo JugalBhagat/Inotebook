@@ -14,7 +14,7 @@ const NotesState = (props) => {
         });
         const json=await response.json();
         console.log(json);
-        setNotes(json);
+        setNotes(json); 
     }
 
     //Add Note
@@ -28,20 +28,10 @@ const NotesState = (props) => {
             },
             body:JSON.stringify({title,description,tag})
         });
-        const json=response.json();
-        console.log("Added ",json)
-        
-        console.log("Adding New Note");
-        const note={
-            "_id": "65fad7d98897cd05c7b27ec7d6112",
-            "user": "65f92aa2dd8ef44d1b9fa0d3f34",
-            "title": title,
-            "description": description,
-            "tag": tag,
-            "date": "2024-03-20T12:34:33.748Z",
-            "__v": 0
-        };
-        setNotes(notes.concat(note));
+
+        const note=await response.json();
+        console.log("Added ",note)
+        setNotes(notes.concat(note));        
     }
     
     //Delete Note
@@ -53,11 +43,9 @@ const NotesState = (props) => {
                 "auth-token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVmOTJhYTJkZDhlZjRkMWI5ZmEwZDNmIn0sImlhdCI6MTcxMDkzNzA5MH0.3zv-krn9lin9MvccdkgXcXu8GOw-9VhsJHVtm1oLLuM"
             }
         });
-        const json=response.json();
-        console.log(json);
-        
-        console.log("Deleting..."+id);
+        const json=await response.json();
         const newNote=notes.filter((note)=>{return note._id!==id})
+        console.log("Deleted : ",json);
         setNotes(newNote)
     }
     
@@ -71,8 +59,9 @@ const NotesState = (props) => {
             },
             body:JSON.stringify({title,description,tag})
         });
+
+        // eslint-disable-next-line
         const json=await response.json();
-        console.log("Edited Note : ",json);
 
         let newnote=JSON.parse(JSON.stringify(notes))
 
@@ -87,7 +76,7 @@ const NotesState = (props) => {
                 break;
             }
         }
-        // console.log(newnote)
+        console.log("Edited Note : ",json)
         setNotes(newnote)
     }
 
