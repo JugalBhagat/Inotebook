@@ -11,7 +11,7 @@ function Notes() {
   const { notes, getallNotes ,editNote } = context;
   const ref = useRef(null);
   const ref_close = useRef(null);
-  const [note,setNote]=useState({id:"",title:"",description:"",tag:""});
+  const [note,setNote]=useState({id:"",title:"",description:"",tag:"default"});
 
   useEffect(() => {
     getallNotes();
@@ -46,19 +46,19 @@ function Notes() {
             <div className="modal-body">
               <form className='w-100' name="form1">
                 <div className="mb-3">
-                  <input type="text" className="form-control" id="title"  name="title" value={note.title} onChange={handleOnChange} />
+                  <input type="text" className="form-control" id="title" minLength={5} required  name="title" value={note.title} onChange={handleOnChange} />
                 </div>
                 <div className="mb-3">
-                  <textarea type="text" className="form-control" rows="5" id="description" name="description" value={note.description}  onChange={handleOnChange} />
+                  <textarea type="text" className="form-control" rows="5" minLength={5} required id="description" name="description" value={note.description}  onChange={handleOnChange} />
                 </div>
                 <div className="mb-3">
-                  <input type="text" className="form-control" id="tags"  name="tag" value={note.tag}  onChange={handleOnChange} />
+                  <input type="text" className="form-control" id="tags" name="tag" minLength={5} required  value={note.tag}  onChange={handleOnChange} />
                 </div>
               </form>
             </div>
             <div className="modal-footer">
               <button type="button" ref={ref_close} className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" className="btn btn-primary" onClick={handleOnClick}>Apply Changes</button>
+              <button type="button" disabled={note.title.length<5 || note.description.length<5 || note.tag.length<5} className="btn btn-primary" onClick={handleOnClick}>Apply Changes</button>
             </div>
           </div>
         </div>
@@ -66,6 +66,9 @@ function Notes() {
 
       <div className='row'>
         <h2>Your Notes</h2>
+        <div className="container">
+          {notes.length===0 && "No Notes to Display"}
+        </div>
         {notes.map((note) => {
           return <NoteItem key={note._id} updateNote={updateNote} notes={note} />;
         })}

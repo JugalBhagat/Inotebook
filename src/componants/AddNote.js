@@ -6,11 +6,13 @@ function AddNote() {
     const context = useContext(notesContext);
     const {addNote } = context;
 
-    const [note,setNote]=useState({title:"",description:"",tag:"default"});
+    const [note,setNote]=useState({title:"",description:"",tag:""});
     
     const handleOnClick=(e)=>{
-        addNote(note.title,note.description,note.tag);
         e.preventDefault();               //to NOT submit form
+        addNote(note.title,note.description,note.tag);
+        setNote({title:"",description:"",tag:""});
+        
     }
     const handleOnChange=(e)=>{
         setNote({...note,[e.target.name]:e.target.value})          //to keep default value
@@ -20,16 +22,16 @@ function AddNote() {
             <h2 className='mt-5 mb-4'>Add a Note</h2>
             <form className='w-100' name="form1">
                 <div className="mb-3">
-                    <input type="text" className="form-control" id="title" placeholder="title" name="title" onChange={handleOnChange} />
+                    <input type="text" className="form-control" id="title" placeholder="title" value={note.title} name="title" minLength={5} required onChange={handleOnChange} />
                 </div>
                 <div className="mb-3">
-                    <textarea type="text" className="form-control" rows="5" id="description" name="description" placeholder="description..." onChange={handleOnChange} />
+                    <textarea type="text" className="form-control" rows="5" id="description" value={note.description} name="description" minLength={5} required placeholder="description..." onChange={handleOnChange} />
                 </div>
                 <div className="mb-3">
-                    <input type="text" className="form-control" id="tags" placeholder="tags" name="tag" onChange={handleOnChange} />
+                    <input type="text" className="form-control" id="tags" placeholder="tags" value={note.tag}  minLength={5} required name="tag" onChange={handleOnChange} />
                 </div>
                 <div className="mb-3 tex">
-                    <button type="submit" className="btn btn-primary w-25" onClick={handleOnClick}>Save</button>
+                    <button type="submit" disabled={note.title.length<5 || note.description.length<5 || note.tag.length<5} className="btn btn-primary w-25" onClick={handleOnClick}>Save</button>
                 </div>
             </form>
         </div>
