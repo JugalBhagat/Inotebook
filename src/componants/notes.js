@@ -16,7 +16,7 @@ function Notes(props) {
   const [note,setNote]=useState({id:"",title:"",description:"",tag:"default"});
 
   useEffect(() => {
-    if(localStorage.getItem("token").length!==0)
+    if(localStorage.getItem("token")!=null)
     {
       getallNotes();
       console.log("fetch note called ",localStorage.getItem("token"));
@@ -24,6 +24,7 @@ function Notes(props) {
     else{
       navigate("/login");
     }
+    // eslint-disable-next-line
   }, [])
 
   const updateNote = (current_note) => {
