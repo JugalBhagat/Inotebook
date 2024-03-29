@@ -16,16 +16,16 @@ function Notes(props) {
   const [note,setNote]=useState({id:"",title:"",description:"",tag:"default"});
 
   useEffect(() => {
-    if(localStorage.getItem("token")!=null)
+    if(localStorage.getItem("token"))
     {
       getallNotes();
-      console.log("fetch note called ",localStorage.getItem("token"));
+      // console.log("fetch note called ",localStorage.getItem("token"));
     }
     else{
       navigate("/login");
     }
     // eslint-disable-next-line
-  }, [])
+  })
 
   const updateNote = (current_note) => {
     ref.current.click();
