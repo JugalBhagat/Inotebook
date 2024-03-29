@@ -4,7 +4,7 @@ import {
 } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-function Signup() {
+function Signup(props) {
     const [creds,setCreds]=useState({name:"",email:"",password:""});
     let navigate = useNavigate();
 
@@ -20,9 +20,12 @@ function Signup() {
             });
             const json=await response.json();
             console.log(json);
+            props.showAlert("success","Signup Successfull");
             navigate("/login");
         }catch(e){
             console.log(e);
+            
+            props.showAlert("danger","Signup Failed");
         }
     }
 

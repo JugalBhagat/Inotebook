@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useContext } from 'react';
 import notesContext from '../context/notes/notesContext';
 
-function AddNote() {
+function AddNote(props) {
     const context = useContext(notesContext);
     const {addNote } = context;
 
@@ -12,14 +12,14 @@ function AddNote() {
         e.preventDefault();               //to NOT submit form
         addNote(note.title,note.description,note.tag);
         setNote({title:"",description:"",tag:""});
-        
+        props.showAlert("primary","Note Added Successfully");
     }
     const handleOnChange=(e)=>{
         setNote({...note,[e.target.name]:e.target.value})          //to keep default value
     }
     return (
-        <div className='cold-lg-6 col-md-12 col-sm-12 my-5 '>
-            <h2 className='mt-5 mb-4'>Add a Note</h2>
+        <div className='cold-lg-6 col-md-12 col-sm-12 mt-4'>
+            <h2 className='mb-4'>Add a Note</h2>
             <form className='w-100' name="form1">
                 <div className="mb-3">
                     <input type="text" className="form-control" id="title" placeholder="title" value={note.title} name="title" minLength={5} required onChange={handleOnChange} />
