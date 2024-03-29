@@ -4,18 +4,26 @@ import notesContext from '../context/notes/notesContext';
 import NoteItem from './NoteItem';
 import AddNote from './AddNote';
 import { useRef } from "react";
+import { useNavigate } from 'react-router-dom';
 
 function Notes(props) {
   const context = useContext(notesContext);
   // eslint-disable-next-line
+  const navigate=useNavigate();
   const { notes, getallNotes ,editNote } = context;
   const ref = useRef(null);
   const ref_close = useRef(null);
   const [note,setNote]=useState({id:"",title:"",description:"",tag:"default"});
 
   useEffect(() => {
-    getallNotes();
-    // eslint-disable-next-line
+    if(localStorage.getItem("token").length!==0)
+    {
+      getallNotes();
+      console.log("fetch note called ",localStorage.getItem("token"));
+    }
+    else{
+      navigate("/login");
+    }
   }, [])
 
   const updateNote = (current_note) => {
