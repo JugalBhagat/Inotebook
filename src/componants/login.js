@@ -10,23 +10,27 @@ function Login() {
     let navigate = useNavigate();
 
     const handleLogin=async(e)=>{
-        e.preventDefault();
-        const response=await fetch('http://localhost:4000/api/auth/login',{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify({email:creds.email,password:creds.password})
-        });
-        const json=await response.json();
-        console.log(json);
-        if(json.success)
-        {
-            localStorage.setItem("token",json.authToken);
-            navigate("/");
+        try{
+            e.preventDefault();
+            const response=await fetch('http://localhost:4000/api/auth/login',{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({email:creds.email,password:creds.password})
+            });
+            const json=await response.json();
+            console.log(json);
+            if(json.success)
+            {
+                localStorage.setItem("token",json.authToken);
+                navigate("/");
+            }
+            else
+                alert("Invalid Creds");
+        }catch(e){
+            console.log(e);
         }
-        else
-            alert("Invalid Creds");
     }
 
     const handleOnChange = (e) => {

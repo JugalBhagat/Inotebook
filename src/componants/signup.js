@@ -9,17 +9,21 @@ function Signup() {
     let navigate = useNavigate();
 
     const handleSignup=async(e)=>{
-        e.preventDefault();
-        const response=await fetch('http://localhost:4000/api/auth/createuser',{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify({name:creds.name,email:creds.email,password:creds.password})
-        });
-        const json=await response.json();
-        console.log(json);
-        navigate("/login");
+        try{
+            e.preventDefault();
+            const response=await fetch('http://localhost:4000/api/auth/createuser',{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify({name:creds.name,email:creds.email,password:creds.password})
+            });
+            const json=await response.json();
+            console.log(json);
+            navigate("/login");
+        }catch(e){
+            console.log(e);
+        }
     }
 
     const handleOnChange = (e) => {
