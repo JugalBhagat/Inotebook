@@ -19,13 +19,13 @@ function Notes(props) {
     if(localStorage.getItem("token"))
     {
       getallNotes();
-      // console.log("fetch note called ",localStorage.getItem("token"));
+      console.log("fetch note called ",localStorage.getItem("token"));
     }
     else{
       navigate("/login");
     }
     // eslint-disable-next-line
-  },[])
+  },[localStorage.getItem("token")])
 
   const updateNote = (current_note) => {
     ref.current.click();

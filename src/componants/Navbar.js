@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useContext } from 'react';
+import { useContext,useState } from 'react';
 import notesContext from '../context/notes/notesContext';
 import {
     Link, useNavigate,
@@ -9,20 +9,24 @@ import { useLocation } from 'react-router-dom';
 
 function Navbar() {
     const context = useContext(notesContext);
+    const [userDetail, setUserDetail] = useState({}); 
     const { fetchUserDetail } = context;
     let location = useLocation();
     const navigate = useNavigate();
 
     useEffect(() => {
-        const usedel= fetchUserDetail();
-        // console.log(usedel);
+        fetchUserDetail().then(usedel => {
+            setUserDetail(usedel);
+        }).catch(error => {
+            console.error("Error fetching user detail:", error); // Handle any errors that occur during fetching
+        });
         // eslint-disable-next-line
-    }, [])
+    }, [fetchUserDetail])
 
     const handle_Signout = () => {
         localStorage.removeItem("token");
         console.log(localStorage.getItem("token"));
-        window.location.reload();
+        // window.location.reload();
         navigate("/login");
     }
     
@@ -56,19 +60,19 @@ function Navbar() {
                         <ul className='sub-menu'>
                             <li className="menu-item sub-item1 lli">
                                 <i className="fa-solid fa-id-card"></i>
-                                <p>ID :  <label className='fetchdata' htmlFor="id">3498587345687346</label></p>
+                                <p>ID :  <label className='fetchdata' htmlFor="id">{userDetail._id}</label></p>
                             </li>
                             <li className="menu-item sub-item1 lli">
                                 <i className="fa-solid fa-signature"></i>
-                                <p>Name : <label className='fetchdata' htmlFor="name">jugal bhagat</label></p>
+                                <p>Name : <label className='fetchdata' htmlFor="name">{userDetail.name}</label></p>
                             </li>
                             <li className="menu-item sub-item1 lli">
                                 <i className="fa-solid fa-envelope"></i>
-                                <p>Email : <label className='fetchdata' htmlFor="email">jugalbhagat@gmail.com</label></p>
+                                <p>Email : <label className='fetchdata' htmlFor="email">{userDetail.email}</label></p>
                             </li>
                             <li className="menu-item sub-item1 lli">
                                 <i className="fa-solid fa-phone"></i>
-                                <p>Mobile : <label className='fetchdata' htmlFor="mobile">35475894</label></p>
+                                <p>Mobile : <label className='fetchdata' htmlFor="mobile">{userDetail.date}</label></p>
                             </li>
                             <hr className='horline' />
                             {
