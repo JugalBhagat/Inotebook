@@ -25,7 +25,7 @@ function Notes(props) {
       navigate("/login");
     }
     // eslint-disable-next-line
-  })
+  },[])
 
   const updateNote = (current_note) => {
     ref.current.click();

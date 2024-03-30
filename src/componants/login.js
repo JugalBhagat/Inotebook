@@ -52,10 +52,10 @@ function Login(props) {
                                 <div className="mb-3">
                                     <input type="password" className="form-control" name="password" value={creds.password} onChange={handleOnChange} id="password" placeholder="Password" />
                                 </div>
-                                <div className="mb-3 form-check">
+                                {/* <div className="mb-3 form-check">
                                     <input type="checkbox" className="form-check-input" id="remember" />
                                     <label className="form-check-label" >Remember me</label>
-                                </div>
+                                </div> */}
                                 <button type="submit" className="btn btn-primary w-100">Login</button>
                             </form>
                             <div className="text-center mt-3">
